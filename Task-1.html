@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Dynamically change a web page title using Js</title>
+</head>
+<style>
+    .dtitle{
+        border: none;
+        border-radius: 10px;
+        color: #fff;
+        background-color: #233882;
+        width: 100%;
+    }
+
+    .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    padding: 10px;
+}
+
+.gallery-item {
+    width: 100%;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.gallery-item:hover {
+    transform: scale(1.05);
+}
+.modal1 {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content1 {
+    max-width: 80%;
+    max-height: 80%;
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+}
+.btn{
+    border: none;
+    border-radius: 10px;
+}
+.delete{
+    color: #fff;
+    background-color: #C80952;
+    margin: 0px 10px;
+}
+.edit{
+    color: #fff;
+    background-color: #233882;
+    margin: 0px 10px;
+}
+.complete{
+    color: #fff;
+    background-color: #068920;
+    margin: 0px 10px;
+}
+</style>
+<body>
+    <ul class="nav nav-tabs nav-fill mb-3" id="ex1" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a
+            class="nav-link active"
+            id="ex2-tab-1"
+            data-bs-toggle="tab"
+            href="#ex2-tabs-1"
+            role="tab"
+            aria-controls="ex2-tabs-1"
+            aria-selected="true"
+            >Dynamic Website Title</a
+          >
+        </li>
+        <li class="nav-item" role="presentation">
+          <a
+            class="nav-link"
+            id="ex2-tab-2"
+            data-bs-toggle="tab"
+            href="#ex2-tabs-2"
+            role="tab"
+            aria-controls="ex2-tabs-2"
+            aria-selected="false"
+            >Responsive Image Gallery</a
+          >
+        </li>
+        <li class="nav-item" role="presentation">
+          <a
+            class="nav-link"
+            id="ex2-tab-3"
+            data-bs-toggle="tab"
+            href="#ex2-tabs-3"
+            role="tab"
+            aria-controls="ex2-tabs-3"
+            aria-selected="false"
+            >To-Do List Application</a
+          >
+        </li>
+      </ul>
+      <div class="tab-content" id="ex2-content">
+        <div
+          class="tab-pane fade show active"
+          id="ex2-tabs-1"
+          role="tabpanel"
+          aria-labelledby="ex2-tab-1"
+        >
+         <!-- task1 -->
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" style="margin: 20px;">Change title</button>
+            <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Dynamic Website Title</h4>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-6"> <p>HTML </p></div>
+                            <div class="col-lg-6"><button class="dtitle" onclick="htmlChange()">set</button></div>
+                            <div class="col-lg-6"> <p>CSS </p></div>
+                            <div class="col-lg-6"><button class="dtitle" onclick="cssChange()">set</button></div>
+                            <div class="col-lg-6"> <p>JS </p></div>
+                            <div class="col-lg-6"><button class="dtitle" onclick="jsChange()">set</button></div>
+                            <div class="col-lg-6"> <p>PHP </p></div>
+                            <div class="col-lg-6"><button class="dtitle" onclick="phpChange()">set</button></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+              
+                  </div>
+                </div>
+              </div>
+        </div>
+        <div class="tab-pane fade" id="ex2-tabs-2" role="tabpanel" aria-labelledby="ex2-tab-2">
+                <!-- task2 -->
+                <div class="gallery">
+                  <img src="img/1.jpg" alt="Image 1" class="gallery-item">
+                  <img src="img/2.jpg" alt="Image 2" class="gallery-item">
+                  <img src="img/3.jpg" alt="Image 3" class="gallery-item">
+                  <img src="img/4.jpg" alt="Image 4" class="gallery-item">
+                  <img src="img/5.jpg" alt="Image 5" class="gallery-item">
+              </div>
+              
+              <div id="modal1" class="modal1">
+                  <span class="close">&times;</span>
+                  <img class="modal-content1" id="modal-img">
+              </div>
+        </div>
+        <div class="tab-pane fade" id="ex2-tabs-3" role="tabpanel" aria-labelledby="ex2-tab-3">
+            <!-- task3 -->
+     <div id="todo" style="padding: 10px;">
+        <form id="addForm">
+            <div class="row">
+                <div class="col-lg-7 col-md-7 col-sm-7">
+
+                    <input type="text" onkeyup="toggleButton(this, 'submit')" class="form-control" id="item">
+                </div>
+
+                <div class="col-lg-5 col-md-5 col-sm-5">
+                    <input type="submit" class="btn btn-dark" id="submit" value="Submit" disabled>
+                </div>
+            </div>
+        </form>
+
+        <h3 class="mt-4">Tasks</h3>
+
+        <form id="addForm">
+            <ul class="list-group" id="items"></ul>
+        </form>
+     </div>
+        </div>
+      </div>
+  
+</body>
+<script>//1
+function htmlChange(){
+var htmlTitle="Html";
+document.title=htmlTitle;
+}
+function cssChange(){
+    cssTitle="Css";
+    document.title=cssTitle;
+}
+function jsChange(){
+var jsTitle="Js";
+document.title=jsTitle;
+}
+function phpChange(){
+    phpTitle="Php";
+    document.title=phpTitle;
+}
+//2
+document.querySelectorAll('.gallery-item').forEach(item => {
+    item.addEventListener('click', event => {
+        const modal = document.getElementById('modal1');
+        const modalImg = document.getElementById('modal-img');
+        modal.style.display = 'flex';
+        modalImg.src = event.target.src;
+    });
+});
+
+document.querySelector('.close').addEventListener('click', () => {
+    const modal = document.getElementById('modal1');
+    modal.style.display = 'none';
+});
+
+window.addEventListener('click', (event) => {
+    const modal = document.getElementById('modal1');
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+});
+//3
+window.onload = () => {
+    const form1 = document.querySelector("#addForm");
+
+    let items = document.getElementById("items");
+    let submit = document.getElementById("submit");
+
+    let editItem = null;
+
+    form1.addEventListener("submit", addItem);
+    items.addEventListener("click", removeItem);
+};
+
+function addItem(e) {
+    e.preventDefault();
+
+    if (submit.value != "Submit") {
+        console.log("Hello");
+
+        editItem.target.parentNode.childNodes[0].data
+            = document.getElementById("item").value;
+
+        submit.value = "Submit";
+        document.getElementById("item").value = "";
+
+        document.getElementById("lblsuccess").innerHTML
+            = "Text edited successfully";
+
+        document.getElementById("lblsuccess")
+                        .style.display = "block";
+
+        setTimeout(function() {
+            document.getElementById("lblsuccess")
+                            .style.display = "none";
+        }, 3000);
+
+        return false;
+    }
+
+    let newItem = document.getElementById("item").value;
+    if (newItem.trim() == "" || newItem.trim() == null)
+        return false;
+    else
+        document.getElementById("item").value = "";
+
+    let li = document.createElement("li");
+    li.className = "list-group-item";
+
+    let deleteButton = document.createElement("button");
+
+    deleteButton.className =
+        "btn btn-sm float-right delete";
+
+    deleteButton.appendChild(document.createTextNode("Delete"));
+
+    let editButton = document.createElement("button");
+
+    editButton.className =
+            "btn btn-sm float-right edit";
+
+    editButton.appendChild(document.createTextNode("Edit"));
+    let comButton = document.createElement("button");
+
+comButton.className =
+        "btn btn-sm float-right complete";
+
+comButton.appendChild(document.createTextNode("Complete"));
+
+    li.appendChild(document.createTextNode(newItem));
+    li.appendChild(deleteButton);
+    li.appendChild(editButton);
+    li.appendChild(comButton);
+
+    items.appendChild(li);
+}
+
+function removeItem(e) {
+    e.preventDefault();
+    if (e.target.classList.contains("delete")) {
+        if (confirm("Are you Sure?")) {
+            let li = e.target.parentNode;
+            items.removeChild(li);
+            document.getElementById("lblsuccess").innerHTML
+                = "Text deleted successfully";
+
+            document.getElementById("lblsuccess")
+                        .style.display = "block";
+
+            setTimeout(function() {
+                document.getElementById("lblsuccess")
+                        .style.display = "none";
+            }, 3000);
+        }
+    }
+    if (e.target.classList.contains("edit")) {
+        document.getElementById("item").value =
+            e.target.parentNode.childNodes[0].data;
+        submit.value = "EDIT";
+        editItem = e;
+    }
+    if(e.target.classList.contains("complete")){
+        const li = e.target.parentNode;
+        li.style.textDecoration = "line-through"; // Mark as completed
+        hideButtons(li);
+    }
+}
+
+function toggleButton(ref, btnID) {
+    document.getElementById(btnID).disabled = false;
+}
+
+
+function hideButtons(li) {
+    const buttons = li.querySelectorAll('.edit, .delete, .complete');
+    buttons.forEach(button => button.style.display = "none");
+}
+</script>
+</html>
